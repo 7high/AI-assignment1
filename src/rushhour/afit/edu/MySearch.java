@@ -2,10 +2,10 @@ package rushhour.afit.edu;
 
 import java.util.LinkedList;
 
-public class AragonSearch implements Search{
+public class MySearch implements Search{
 	public LinkedList<Board>states;
 	
-	public AragonSearch(Board board) {
+	public MySearch(Board board) {
 		this.states = new LinkedList<Board>(); 
 		states.add(board);
 		board.visited = false;

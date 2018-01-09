@@ -65,7 +65,7 @@ public class RushHour
 
         // HERE: on the following line you need to have a search created, sending it the 
         // initial node.
-        search = new AragonSearch(board);
+        search = new MySearch(board);
         
         //start timer
         startTime = System.currentTimeMillis();
