@@ -1,31 +1,55 @@
 package rushhour.afit.edu;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 
 public class MySearch implements Search{
-	public LinkedList<Board>states;
+	public LinkedList<Board>frontier;
+	public HashSet<Board>explored;
 	int moveCount;
 	
 	public MySearch(Board board) {
-		this.states = new LinkedList<Board>(); 
-		states.add(board);
-		board.visited = false;
+		this.frontier = new LinkedList<Board>();
+		frontier.add(board);
+		
+		this.explored = new HashSet<Board>();		
 		this.moveCount = 0;
-		System.out.println(goalTest(board));
 	}
 
 	@Override
-	public Move findMoves() {
-		Board board = states.remove();
-		Move possibleMoves = board.genMoves();
-		System.out.println(possibleMoves);
+	public Move findMoves() {	
+		Board b = frontier.peek();		
+		if (goalTest(b)) {return b.move_list;}		
+		
+		while(!frontier.isEmpty()) {
+			b = frontier.remove();
+			explored.add(b);		
+			
+			Move m = b.genMoves(); //m has a pointer to the next move
+			if (m != null) { //the last move in a Move list is null
+				b.makeMove(m);
+				System.out.println("makeMove");
+				moveCount++;				
+				
+				if (goalTest(b)) {
+					System.out.println("Found solution");
+					return b.move_list;					
+				}
+				
+				if ((!explored.contains(b)) && (!frontier.contains(b))) {//add only if the board is unexplored and not currently in frontier
+					frontier.add(b);					
+				}				
+				m = m.next;
+			}			
+		}
+		System.out.println("No solution found");
 		return null;
 	}
 
 	@Override
 	public long nodeCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return moveCount;
 	}
 	
 	public boolean goalTest(Board board) {		

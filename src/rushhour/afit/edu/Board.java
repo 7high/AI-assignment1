@@ -23,8 +23,7 @@ public class Board
     public Piece piece_list[];
     public int piece_count = 0;
     public Move move_list;
-    
-    public boolean visited; //I added this variable so I can keep track of visited boards
+        
 
     /**
      * Board constructor
@@ -36,8 +35,6 @@ public class Board
           theBoard[i][j] = -1;
       piece_list = new Piece[PIECE_COUNT];
       move_list = null;
-      
-      visited = false; //Added
     }
 
     /**
