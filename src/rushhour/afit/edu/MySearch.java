@@ -1,18 +1,16 @@
 package rushhour.afit.edu;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 
 public class MySearch implements Search{
 	public LinkedList<Board>frontier;
-	public HashSet<Board>explored;
+	public MyHashSet explored;
 	int count;
 	
 	public MySearch(Board board) {
 		this.frontier = new LinkedList<Board>();
-		frontier.add(board);
-		
-		this.explored = new HashSet<Board>();		
+		frontier.add(board);		
+		this.explored = new MyHashSet();	
 		this.count = 0;
 	}
 
@@ -21,37 +19,31 @@ public class MySearch implements Search{
 		Board b = frontier.peek();		
 		if (goalTest(b)) {return b.move_list;}		
 		
-		while(!frontier.isEmpty()) {
-			b = frontier.remove();
-			explored.add(b);		
+		while(!frontier.isEmpty()) {	
+			b = frontier.remove();//Get unexpanded state
+			Move m = b.genMoves(); //Expand state
+			explored.add(b); //Put expanded state into explored 
 			
-			Move m = b.genMoves(); //m has a pointer to the next move
-			//printGenMove(m);
-			
-			if (m != null) { //the last move in a Move list is null
-				b.makeMove(m);				
-				count++;		
+			while(m != null) { //the last move in a Move list is null
+				Board newState = new Board(b); //Create new board based on expanded state	
+				newState.makeMove(m);
+				count++;				
 				
-				Board c = new Board(b);
+				if (goalTest(newState)) {
+					return newState.move_list;					
+				}								
 				
-				if (goalTest(c)) {
-					return c.move_list;					
+				if ((!explored.contains(newState)) && (!frontier.contains(newState))) {//add only if the board is unexplored and not currently in frontier
+					frontier.add(newState);					
 				}
-				
-				if ((!explored.contains(c)) && (!frontier.contains(c))) {//add only if the board is unexplored and not currently in frontier
-					frontier.add(c);	
-					System.out.println(c);
-				}				
-				m = m.next;
+				m = m.next;				
 			}			
 		}
-		
 		return null;
 	}
 
 	@Override
 	public long nodeCount() {
-		// TODO Auto-generated method stub
 		return count;
 	}
 	

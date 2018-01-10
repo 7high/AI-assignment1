@@ -38,6 +38,19 @@ public class Move
       next = null; 
     }
     
+    
+    public boolean equals(Move m) {
+    	Move other = m;
+    	if(this.direction != other.direction && 
+    			this.piece_index != other.piece_index && 
+    			this.spaces != other.piece_index && 
+    			this.next != other.next) {
+    		return false;
+    	}
+    	
+    	return true;
+    }
+    
     @Override
     public String toString() {
     	// TODO Auto-generated method stub

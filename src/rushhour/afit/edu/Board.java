@@ -1,4 +1,7 @@
 package rushhour.afit.edu;
+
+import java.util.Arrays;
+
 /**
  * <p>Title: Rush Hour</p>
  * <p>Description: </p>
@@ -71,7 +74,24 @@ public class Board
     	// the board will no longer be the same.
     }
 
-    /**
+    @Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((move_list == null) ? 0 : move_list.hashCode());
+		result = prime * result + piece_count;
+		result = prime * result + Arrays.hashCode(piece_list);
+		result = prime * result + Arrays.deepHashCode(theBoard);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Board other = (Board) obj;
+		return Arrays.deepEquals(this.theBoard, other.theBoard);
+	}
+
+	/**
      * This method imports the board from the string array newBoard into
      * theBoard data structure. The origin of the array is also translated to
      * standard cartesian.
