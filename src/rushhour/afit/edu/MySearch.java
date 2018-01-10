@@ -6,14 +6,14 @@ import java.util.LinkedList;
 public class MySearch implements Search{
 	public LinkedList<Board>frontier;
 	public HashSet<Board>explored;
-	int moveCount;
+	int count;
 	
 	public MySearch(Board board) {
 		this.frontier = new LinkedList<Board>();
 		frontier.add(board);
 		
 		this.explored = new HashSet<Board>();		
-		this.moveCount = 0;
+		this.count = 0;
 	}
 
 	@Override
@@ -26,10 +26,13 @@ public class MySearch implements Search{
 			explored.add(b);		
 			
 			Move m = b.genMoves(); //m has a pointer to the next move
+			//printGenMove(m);
+			
 			if (m != null) { //the last move in a Move list is null
+				carLocation(b);
 				b.makeMove(m);
-				System.out.println("makeMove");
-				moveCount++;				
+				carLocation(b);				
+				count++;				
 				
 				if (goalTest(b)) {
 					System.out.println("Found solution");
@@ -49,17 +52,37 @@ public class MySearch implements Search{
 	@Override
 	public long nodeCount() {
 		// TODO Auto-generated method stub
-		return moveCount;
+		return count;
 	}
 	
 	public boolean goalTest(Board board) {		
 		Piece myCar= board.piece_list[board.findPiece("X0")];
 		
-		if ((myCar.x == Board.BOARD_EXIT_X) && (myCar.y == Board.BOARD_EXIT_Y)) {
+		if ((myCar.x == Board.BOARD_INDEX) && (myCar.y == Board.BOARD_EXIT_Y)) {
 			return true;
 		}
 		
 		return false;
+	}
+	
+	public void printGenMove(Move m) {
+		while(m !=null) {
+			System.out.println(m);
+			m = m.next;
+		}
+	}
+	
+	public void printMoveList(Board b) {
+		Move m = b.move_list;
+		while(m !=null) {
+			System.out.println(m);
+			m = m.next;
+		}
+	}
+	
+	public void carLocation(Board b) {
+		Piece myCar = b.piece_list[b.findPiece("X0")];
+		System.out.println("MyCar(" + myCar.x + ", " + myCar.y + ")");
 	}
 
 }
