@@ -29,23 +29,23 @@ public class MySearch implements Search{
 			//printGenMove(m);
 			
 			if (m != null) { //the last move in a Move list is null
-				carLocation(b);
-				b.makeMove(m);
-				carLocation(b);				
-				count++;				
+				b.makeMove(m);				
+				count++;		
 				
-				if (goalTest(b)) {
-					System.out.println("Found solution");
-					return b.move_list;					
+				Board c = new Board(b);
+				
+				if (goalTest(c)) {
+					return c.move_list;					
 				}
 				
-				if ((!explored.contains(b)) && (!frontier.contains(b))) {//add only if the board is unexplored and not currently in frontier
-					frontier.add(b);					
+				if ((!explored.contains(c)) && (!frontier.contains(c))) {//add only if the board is unexplored and not currently in frontier
+					frontier.add(c);	
+					System.out.println(c);
 				}				
 				m = m.next;
 			}			
 		}
-		System.out.println("No solution found");
+		
 		return null;
 	}
 
