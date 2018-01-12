@@ -22,6 +22,7 @@ public class RushHour
       //open board data file
       //File inputFile = new File("Data.txt");
       File inputFile = new File("Killers.txt");
+      //File inputFile = new File("Test.txt");
       FileReader in = new FileReader(inputFile);
 
       //get number of boards from first line

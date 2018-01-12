@@ -74,17 +74,17 @@ public class Board
     	// the board will no longer be the same.
     }
 
+    /**
+     * Overrode hashCode() to just run the hash on theBoard[][] 
+     */
     @Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((move_list == null) ? 0 : move_list.hashCode());
-		result = prime * result + piece_count;
-		result = prime * result + Arrays.hashCode(piece_list);
-		result = prime * result + Arrays.deepHashCode(theBoard);
-		return result;
+		return Arrays.deepHashCode(theBoard);
 	}
 
+    /**
+     * Overrode equals() to compare Board objects based on their theBoard[][]
+     */
 	@Override
 	public boolean equals(Object obj) {
 		Board other = (Board) obj;

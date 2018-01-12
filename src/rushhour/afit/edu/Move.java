@@ -38,7 +38,11 @@ public class Move
       next = null; 
     }
     
-    
+    /**
+     * Checks if moves are equal
+     * @param m
+     * @return
+     */
     public boolean equals(Move m) {
     	Move other = m;
     	if(this.direction != other.direction && 

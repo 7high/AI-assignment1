@@ -2,6 +2,11 @@ package rushhour.afit.edu;
 
 import java.util.LinkedList;
 
+/**
+ * MySearch implements a breadth-first search to solve the Rushhour game puzzle.
+ * @author User
+ *
+ */
 public class MySearch implements Search{
 	public LinkedList<Board>frontier;
 	public MyHashSet explored;
@@ -23,18 +28,19 @@ public class MySearch implements Search{
 			b = frontier.remove();//Get unexpanded state
 			Move m = b.genMoves(); //Expand state
 			explored.add(b); //Put expanded state into explored 
+			count++;
 			
 			while(m != null) { //the last move in a Move list is null
 				Board newState = new Board(b); //Create new board based on expanded state	
-				newState.makeMove(m);
-				count++;				
+				newState.makeMove(m);								
 				
 				if (goalTest(newState)) {
 					return newState.move_list;					
 				}								
 				
 				if ((!explored.contains(newState)) && (!frontier.contains(newState))) {//add only if the board is unexplored and not currently in frontier
-					frontier.add(newState);					
+					frontier.add(newState);
+					
 				}
 				m = m.next;				
 			}			
@@ -57,6 +63,10 @@ public class MySearch implements Search{
 		return false;
 	}
 	
+	/**
+	 * Debugging method. I used this to print out all the possible moves from a given Move
+	 * @param m
+	 */
 	public void printGenMove(Move m) {
 		while(m !=null) {
 			System.out.println(m);
@@ -64,6 +74,10 @@ public class MySearch implements Search{
 		}
 	}
 	
+	/**
+	 * Debugging method.
+	 * @param b
+	 */
 	public void printMoveList(Board b) {
 		Move m = b.move_list;
 		while(m !=null) {
@@ -72,6 +86,10 @@ public class MySearch implements Search{
 		}
 	}
 	
+	/**
+	 * Debugging method
+	 * @param b
+	 */
 	public void carLocation(Board b) {
 		Piece myCar = b.piece_list[b.findPiece("X0")];
 		System.out.println("MyCar(" + myCar.x + ", " + myCar.y + ")");
